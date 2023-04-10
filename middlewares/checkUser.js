@@ -42,7 +42,24 @@ const checkLoginUserData = catchAsync(async (req, res, next) => {
   next();
 });
 
+const checkVerifyEmail = catchAsync(async (req, res, next) => {
+  const { error, value } = userValidator.verifyEmailValidation(req.body);
+
+  if (error)
+    return next(
+      new AppError(
+        400,
+        error.details.map((item) => item.message)
+      )
+    );
+
+
+  req.body = value;
+  next();
+});
+
 module.exports = {
   checkRegisterUserData,
   checkLoginUserData,
+  checkVerifyEmail
 };
