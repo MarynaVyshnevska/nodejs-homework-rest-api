@@ -3,13 +3,14 @@ const sendVerifyEmail = require("../../services/emailServices");
 const { AppError } = require("../../utils");
 
 const resendVerifyEmail = async (req, res, next) => {
+  console.log(req.body)
   const { email } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
     return next(new AppError(404, "User not found"));
   }
 
-  if (!user.verify) {
+  if (user.verify) {
     return next(new AppError(400, "User already verify"));
   }
 
