@@ -8,8 +8,8 @@ exports.registerUserValidation = (data) =>
     .keys({
       password: Joi.string().regex(PASSWD_REGEXR).required(),
       email: Joi.string().email().min(3).max(40).required(),
-    //   subscription: Joi.string().valid(...Object.values(userSubscriptionEnum)),
-    //   token: Joi.boolean().valid(false),
+      //   subscription: Joi.string().valid(...Object.values(userSubscriptionEnum)),
+      //   token: Joi.boolean().valid(false),
     })
     .validate(data);
 
@@ -22,3 +22,10 @@ exports.loginUserValidation = (data) =>
     })
     .validate(data);
 
+exports.verifyEmailValidation = (data) =>
+  Joi.object()
+    .options({ abortEarly: false })
+    .keys({
+      email: Joi.string().email().min(3).max(40).required(),
+    })
+    .validate(data);
